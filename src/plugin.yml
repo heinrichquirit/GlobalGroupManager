@@ -1,0 +1,8 @@
+name: GlobalGroupManager
+main: main.java.net.bigbadcraft.globalgroupmanager.GlobalGroupManager
+version: 1.0.0
+depend: [Vault]
+author: BigBadHenz
+commands:
+  ggm:
+    description: The main command.

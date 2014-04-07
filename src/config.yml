@@ -1,0 +1,7 @@
+# Set this to true if you wish for your server to submit information to MCStats
+use-metrics: true
+# The worlds you wish to black-list
+worlds:
+- world
+- world2
+- world3
