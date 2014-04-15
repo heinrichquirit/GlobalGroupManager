@@ -16,8 +16,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GlobalGroupManager extends JavaPlugin {
-
-	private String version;
 	
 	private Chat chat = null;
 	private Permission permission = null;
@@ -32,8 +30,6 @@ public class GlobalGroupManager extends JavaPlugin {
 	private String trimmed_cmd = cmd_starter.substring(1, cmd_starter.length());
 	
 	public void onEnable() {
-		version = getDescription().getVersion();
-		Methods.log(Level.INFO, "GlobalGroupManager v"+version + " by BigBadHenz has been enabled."); 
 		saveDefaultConfig();
 		useMetrics = getConfig().getBoolean("use-metrics");
 		worlds_blacklist = getConfig().getStringList("worlds");
@@ -49,10 +45,6 @@ public class GlobalGroupManager extends JavaPlugin {
 		    // Failed to submit the stats :-(
 			Methods.log(Level.SEVERE, "Metrics failed to submit data!");
 		}
-	}
-	
-	public void onDisable() {
-		Methods.log(Level.INFO, "GlobalGroupManager v" + version + " by BigBadHenz has been disabled."); 
 	}
 	
 	public List<String> getBlackList() {

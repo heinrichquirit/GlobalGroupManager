@@ -42,19 +42,14 @@ public class SetGroup extends BaseCommand {
 					Methods.makeMessage(sender, ChatColor.RED + group + " group does not exist.");
 					return;
 				}
-				/*
-				if (p.getChatMgr().playerInGroup(target, group)) {
-					Methods.makeMessage(sender, ChatColor.RED + target.getName() + " is already in " + group + ".");
-					return;
-				}
-				*/
 				List<String> list_world_names = new ArrayList<String>();
 				for (World worlds : Bukkit.getWorlds()) {
 					String world_names = worlds.getName();
 					String[] groups = p.getPermMgr().getPlayerGroups(worlds, target.getName());
-					String previous_group = groups[0];
 					if (!p.getBlackList().contains(world_names)) {
-						p.getPermMgr().playerRemove(worlds, target.getName(), previous_group);
+						for (String old_group : groups) {
+							p.getPermMgr().playerRemove(worlds, target.getName(), old_group);
+						}
 						p.getPermMgr().playerAdd(worlds, target.getName(), group);
 						list_world_names.add(world_names);
 					}
@@ -63,6 +58,7 @@ public class SetGroup extends BaseCommand {
 				Methods.makeMessage(sender, ChatColor.GREEN + "Moved " + target.getName() + " to " 
 						+ group + ", in worlds: " + nice_list
 				);
+				if (target.getName().equals(sender.getName())) return;
 				Methods.makeMessage(target, ChatColor.GREEN + sender.getName() + " has moved you to "
 						+ group + ", in worlds: " + nice_list
 				);
