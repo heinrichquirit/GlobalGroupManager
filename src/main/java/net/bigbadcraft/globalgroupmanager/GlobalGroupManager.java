@@ -12,10 +12,16 @@ import net.milkbowl.vault.Metrics;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.google.common.base.Joiner;
+
 public class GlobalGroupManager extends JavaPlugin {
+	
+	private static GlobalGroupManager instance;
 	
 	private Chat chat = null;
 	private Permission permission = null;
@@ -30,10 +36,11 @@ public class GlobalGroupManager extends JavaPlugin {
 	private String trimmed_cmd = cmd_starter.substring(1, cmd_starter.length());
 	
 	public void onEnable() {
+		instance = this;
 		saveDefaultConfig();
 		useMetrics = getConfig().getBoolean("use-metrics");
 		worlds_blacklist = getConfig().getStringList("worlds");
-		getCommand(trimmed_cmd).setExecutor(new CommandHandler(this));
+		getCommand(trimmed_cmd).setExecutor(new CommandHandler());
 		setupChat();
 		setupPermissions();
 		if (useMetrics == false) return;
@@ -59,7 +66,7 @@ public class GlobalGroupManager extends JavaPlugin {
         return (chat != null);
     }
 	
-	public Chat getChatMgr() {
+	public Chat getVaultChat() {
 		return chat;
 	}
 	
@@ -71,8 +78,23 @@ public class GlobalGroupManager extends JavaPlugin {
         return (permission != null);
     }
 	
-	public Permission getPermMgr() {
+	public Permission getVaultPerm() {
 		return permission;
+	}
+	
+	public String getAvailableWorlds() {
+		List<String> list_world_names = new ArrayList<String>();
+		for (World worlds : Bukkit.getWorlds()) {
+			String world_names = worlds.getName();
+			if (!getBlackList().contains(world_names)) {
+				list_world_names.add(world_names);
+			}
+		}
+		return Joiner.on(", ").join(list_world_names) + ".";
+	}
+	
+	public static GlobalGroupManager getInstance() {
+		return instance;
 	}
 	
 }

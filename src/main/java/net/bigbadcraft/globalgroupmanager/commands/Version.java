@@ -9,18 +9,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Version extends BaseCommand {
-
-	private GlobalGroupManager p;
-	public Version(GlobalGroupManager instance) {
-		p = instance;
-	}
 	
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if (!Methods.checkPermission(((Player) sender), Permission.VERSION)) return;
 		if (args.length == 1) {
 			Methods.makeMessage(sender, ChatColor.GREEN + "You are running version v" 
-					+ p.getDescription().getVersion()
+					+ GlobalGroupManager.getInstance().getDescription().getVersion()
 			);
 		}
 	}

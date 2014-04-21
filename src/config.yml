@@ -1,6 +1,6 @@
 # Set this to true if you wish for your server to submit information to MCStats
 use-metrics: true
-# The worlds you wish to black-list
+# The worlds you wish the plugin to not affect
 worlds:
 - world
 - world2
