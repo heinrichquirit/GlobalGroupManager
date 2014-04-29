@@ -32,6 +32,12 @@ public class AddPerm extends BaseCommand {
 					);
 					return;
 				}
+				if (target.groupHasPermission(permission)) {
+					Methods.makeMessage(sender, ChatColor.RED + target.getPlayer().getName()
+							+ "'s group has either permission: *, " + permission
+					);
+					return;
+				}
 				target.addPermission(permission);
 				Methods.makeMessage(sender, ChatColor.GREEN + "Added permission: " 
 						+ permission + " for " + target.getPlayer().getName() 

@@ -82,4 +82,28 @@ public class PlayerData {
 		return false;
 	}
 	
+	public boolean groupHasPermission(String permission) {
+		for (World worlds : Bukkit.getWorlds()) {
+			String world_names = worlds.getName();
+			if (!GlobalGroupManager.getInstance().getBlackList().contains(world_names)) {
+				if (playerHasGroup()) {
+					String group = GlobalGroupManager.getInstance().getVaultChat().getPrimaryGroup(player);
+					if (GlobalGroupManager.getInstance().getVaultPerm().groupHas(world_names, group, permission)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean playerHasGroup() {
+		for (String s : GlobalGroupManager.getInstance().getVaultChat().getGroups()) {
+			if (GlobalGroupManager.getInstance().getVaultChat().getPrimaryGroup(player).equalsIgnoreCase(s)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
